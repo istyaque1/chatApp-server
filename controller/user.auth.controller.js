@@ -30,11 +30,6 @@ export const userRegister = async (req, res) => {
 
       return;
     }
-    if (req.file) {
-      res.status(400).json({ status: false, message: "Image is required" });
-
-      return;
-    }
 
     const upload = await cloudinary.uploader.upload(req.file.path);
 
