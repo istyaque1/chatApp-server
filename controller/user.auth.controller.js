@@ -30,6 +30,12 @@ export const userRegister = async (req, res) => {
 
       return;
     }
+    if (req.file) {
+      res.status(400).json({ status: false, message: "Image is required" });
+
+      return;
+    }
+
     const upload = await cloudinary.uploader.upload(req.file.path);
 
     const hashedPassword = await bycrypt.hash(password, 10);
@@ -78,9 +84,11 @@ export const userLogin = async (req, res) => {
         .json({ status: false, message: "User not registered..." });
       return;
     }
-    
 
-    const isCorrectPassword = await bycrypt.compare(password, newUser?.password);
+    const isCorrectPassword = await bycrypt.compare(
+      password,
+      newUser?.password
+    );
 
     if (!isCorrectPassword) {
       res
