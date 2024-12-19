@@ -63,7 +63,7 @@ export const userRegister = async (req, res) => {
 export const userLogin = async (req, res) => {
   try {
     const { username, password } = req.body;
-
+    console.log(username, password);
     if (!username || !password) {
       res
         .status(400)
@@ -91,7 +91,6 @@ export const userLogin = async (req, res) => {
         .json({ status: false, message: "Password not matched..." });
       return;
     }
-
     const token = jwt.sign({ userID: newUser?._id }, process.env.MY_KEY);
 
     res.status(200).json({
