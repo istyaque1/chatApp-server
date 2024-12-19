@@ -5,6 +5,7 @@ import userRouter from "./routes/user.auth.js";
 import messageRoute from "./routes/message.route.js";
 import cors from "cors";
 import { server, app } from "./socket.js";
+import resetRoute from "./routes/reset.route.js";
 
 configDotenv();
 // const app = express();
@@ -14,6 +15,7 @@ app.use(cors());
 
 app.use("/user", userRouter);
 app.use("/user", messageRoute);
+app.use("/user", resetRoute);
 
 const port = process.env.PORT;
 server.listen(port, () => {
