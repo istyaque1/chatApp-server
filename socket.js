@@ -28,6 +28,23 @@ io.on("connection", (socket) => {
   });
   socket.emit("onlineUsers", onlineUsers);
 
+  // typing here
+
+  socket.on("typing", ({ senderId, receiverId }) => {
+    const receiverSocketId = GetReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("typing", { senderId });
+    }
+  });
+
+  socket.on("stop typing", ({ senderId, receiverId }) => {
+    const receiverSocketId = GetReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("stop typing", { senderId });
+    }
+  });
+  // typing here
+
   socket.on("disconnect", () => {
     for (let id in onlineUsers) {
       if (onlineUsers[id] === socket.id) {
